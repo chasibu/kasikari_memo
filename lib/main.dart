@@ -43,6 +43,13 @@ class _MyList extends State<List> {
           child: const Icon(Icons.add),
           onPressed: () {
             print("新規作成ボタンを押しました");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: const RouteSettings(name: "/new"),
+                  builder: (BuildContext context) => InputForm()
+              ),
+            );
           }
       ),
     );
