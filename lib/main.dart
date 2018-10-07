@@ -3,6 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -10,7 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'かしかりメモ',
-      home: List(),
+      routes: <String, WidgetBuilder>{
+        '/': (_) =>  Splash(),
+        '/list': (_) => List(),
+      },
     );
   }
 }
