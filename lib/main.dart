@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dart:async';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -106,6 +108,15 @@ class _MyInputFormState extends State<InputForm> {
     });
   }
 
+  Future <DateTime> _selectTime(BuildContext context) {
+    return showDatePicker(
+        context: context,
+        initialDate: _data.date,
+        firstDate: DateTime(_data.date.year - 2),
+        lastDate: DateTime(_data.date.year + 2)
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -178,6 +189,13 @@ class _MyInputFormState extends State<InputForm> {
                 child: const Text("締め切り日変更"),
                 onPressed: (){
                   print("締め切り日変更をタッチしました");
+                  _selectTime(context).then((time){
+                    if(time != null && time != _data.date){
+                      setState(() {
+                        _data.date = time;
+                      });
+                    }
+                  });
                 },
               ),
             ],
