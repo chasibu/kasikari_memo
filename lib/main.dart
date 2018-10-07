@@ -45,7 +45,7 @@ class _MyList extends State<List> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection('kasikari-memo').snapshots(),
+            stream: Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
               if (!snapshot.hasData) return const Text('Loading...');
               return ListView.builder(
