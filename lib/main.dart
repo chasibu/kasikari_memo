@@ -185,6 +185,15 @@ class _MyInputFormState extends State<InputForm> {
                   hintText: '相手の名前',
                   labelText: 'Name',
                 ),
+                onSaved: (String value) {
+                  _data.user = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return '名前は必須入力項目です';
+                  }
+                },
+                initialValue: _data.user,
               ),
 
               TextFormField(
@@ -193,6 +202,15 @@ class _MyInputFormState extends State<InputForm> {
                   hintText: '借りたもの、貸したもの',
                   labelText: 'loan',
                 ),
+                onSaved: (String value) {
+                  _data.stuff = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return '借りたもの、貸したものは必須入力項目です';
+                  }
+                },
+                initialValue: _data.stuff,
               ),
 
               Padding(
