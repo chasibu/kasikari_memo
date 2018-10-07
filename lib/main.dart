@@ -119,6 +119,9 @@ class _MyInputFormState extends State<InputForm> {
 
   @override
   Widget build(BuildContext context) {
+    DocumentReference _mainReference;
+    _mainReference = Firestore.instance.collection('kasikari-memo').document();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('かしかり入力'),
@@ -127,6 +130,18 @@ class _MyInputFormState extends State<InputForm> {
               icon: Icon(Icons.save),
               onPressed: () {
                 print("保存ボタンを押しました");
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  _mainReference.setData(
+                      {
+                        'borrowOrLend': _data.borrowOrLend,
+                        'user': _data.user,
+                        'stuff': _data.stuff,
+                        'date': _data.date
+                      }
+                  );
+                  Navigator.pop(context);
+                }
               }
           ),
           IconButton(
