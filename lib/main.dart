@@ -32,6 +32,15 @@ class _MyList extends State<List> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("リスト画面"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              print("login");
+              showBasicDialog(context);
+            },
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
