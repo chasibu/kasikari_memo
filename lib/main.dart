@@ -58,6 +58,19 @@ class _MyList extends State<List> {
               title: Text("【 " + (document['borrowOrLend'] == "lend"?"貸": "借") +" 】"+ document['stuff']),
               subtitle: Text('期限 ： ' + document['date'].toString().substring(0,10) + "\n相手 ： " + document['user']),
             ),
+            ButtonTheme.bar(
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                        child: const Text("へんしゅう"),
+                        onPressed: ()
+                        {
+                          print("編集ボタンを押しました");
+                        }
+                    ),
+                  ],
+                )
+            ),
           ]
       ),
     );
