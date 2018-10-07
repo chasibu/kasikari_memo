@@ -61,3 +61,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.firebase:firebase-core:16.0.1'
 }
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
