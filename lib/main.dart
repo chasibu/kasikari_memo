@@ -135,6 +135,7 @@ class _MyInputFormState extends State<InputForm> {
     //編集データの作成
     DocumentReference _mainReference;
     _mainReference = Firestore.instance.collection('kasikari-memo').document();
+    bool deleteFlg = false;
     if (widget.document != null) {//引数で渡したデータがあるかどうか
       if(_data.user == null && _data.stuff == null) {
         _data.borrowOrLend = widget.document['borrowOrLend'];
@@ -144,6 +145,7 @@ class _MyInputFormState extends State<InputForm> {
       }
       _mainReference = Firestore.instance.collection('kasikari-memo').
       document(widget.document.documentID);
+      deleteFlg = true;
     }
 
     return Scaffold(
@@ -170,8 +172,10 @@ class _MyInputFormState extends State<InputForm> {
           ),
           IconButton(
             icon: Icon(Icons.delete),
-            onPressed: () {
+            onPressed: !deleteFlg? null:() {
               print("削除ボタンを押しました");
+              _mainReference.delete();
+              Navigator.pop(context);
             },
           ),
         ],
