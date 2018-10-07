@@ -39,6 +39,12 @@ class _MyList extends State<List> {
             }
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            print("新規作成ボタンを押しました");
+          }
+      ),
     );
   }
 
