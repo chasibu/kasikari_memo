@@ -24,6 +24,8 @@ dependencies:
   firebase_auth: ^0.5.20
   fluttertoast: ^2.0.7
 
+  share: ^0.5.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
