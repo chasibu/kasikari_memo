@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
+import 'generated/i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'かしかりメモ',
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      localeResolutionCallback: S.delegate.resolution(fallback: new Locale("en","")),
+      title: "Kasikari Memo",
       routes: <String, WidgetBuilder>{
         '/': (_) =>  Splash(),
         '/list': (_) => List(),
@@ -32,7 +41,7 @@ class _MyList extends State<List> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("リスト画面"),
+        title: Text(S.of(context).title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.exit_to_app),
@@ -81,14 +90,14 @@ class _MyList extends State<List> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.android),
-              title: Text("【 " + (document['borrowOrLend'] == "lend"?"貸": "借") +" 】"+ document['stuff']),
-              subtitle: Text('期限 ： ' + document['date'].toString().substring(0,10) + "\n相手 ： " + document['user']),
+              title: Text("【 " + (document['borrowOrLend'] == "lend"?S.of(context).lend: S.of(context).borrow) + " 】"+ document['stuff']),
+              subtitle: Text(S.of(context).deadline(document['date'].toString().substring(0,10)) +"\n"+ S.of(context).who(document['user'])),
             ),
             ButtonTheme.bar(
                 child: ButtonBar(
                   children: <Widget>[
                     FlatButton(
-                        child: const Text("へんしゅう"),
+                      child: Text(S.of(context).edit),
                         onPressed: ()
                         {
                           print("編集ボタンを押しました");
@@ -165,7 +174,7 @@ class _MyInputFormState extends State<InputForm> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('かしかり入力'),
+        title: Text(S.of(context).input_title),
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.save),
@@ -200,10 +209,10 @@ class _MyInputFormState extends State<InputForm> {
               if (_formKey.currentState.validate()) {
                 _formKey.currentState.save();
                 Share.share(
-                    "【 " + (_data.borrowOrLend == "lend"?"貸": "借") +" 】"+ _data.stuff+
-                        "\n期限 ： "+ _data.date.toString().substring(0,10) +
-                        "\n相手 ： " + _data.user+
-                        "\n#かしかりメモ"
+                    "【 " + (_data.borrowOrLend == "lend"?S.of(context).lend: S.of(context).borrow) +" 】"+ _data.stuff+
+                    "\n"+S.of(context).deadline(_data.date.toString().substring(0,10)) +
+                    "\n"+S.of(context).who(_data.user)+
+                    "\n#"+S.of(context).title
                 );
               }
             },
@@ -221,7 +230,7 @@ class _MyInputFormState extends State<InputForm> {
               RadioListTile(
                 value: "borrow",
                 groupValue: _data.borrowOrLend,
-                title: Text("借りた"),
+                title: Text(S.of(context).Registration_borrow),
                 onChanged: (String value){
                   print("借りたをタッチしました");
                   _setLendOrRent(value);
@@ -230,7 +239,7 @@ class _MyInputFormState extends State<InputForm> {
               RadioListTile(
                   value: "lend",
                   groupValue: _data.borrowOrLend,
-                  title: Text("貸した"),
+                  title: Text(S.of(context).Registration_lend),
                   onChanged: (String value) {
                     print("貸したをタッチしました");
                     _setLendOrRent(value);
@@ -238,9 +247,9 @@ class _MyInputFormState extends State<InputForm> {
               ),
 
               TextFormField(
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   icon: const Icon(Icons.person),
-                  hintText: '相手の名前',
+                  hintText: (_data.borrowOrLend == "lend"?S.of(context).Registration_name_lend: S.of(context).Registration_name_borrow),
                   labelText: 'Name',
                 ),
                 onSaved: (String value) {
@@ -248,24 +257,24 @@ class _MyInputFormState extends State<InputForm> {
                 },
                 validator: (value) {
                   if (value.isEmpty) {
-                    return '名前は必須入力項目です';
+                    return S.of(context).validate_name;
                   }
                 },
                 initialValue: _data.user,
               ),
 
               TextFormField(
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   icon: const Icon(Icons.business_center),
-                  hintText: '借りたもの、貸したもの',
-                  labelText: 'loan',
+                  hintText: (_data.borrowOrLend == "lend"?S.of(context).Registration_loan_lend: S.of(context).Registration_loan_borrow),
+                  labelText: 'Loan',
                 ),
                 onSaved: (String value) {
                   _data.stuff = value;
                 },
                 validator: (value) {
                   if (value.isEmpty) {
-                    return '借りたもの、貸したものは必須入力項目です';
+                    return S.of(context).validate_loan;
                   }
                 },
                 initialValue: _data.stuff,
@@ -273,11 +282,11 @@ class _MyInputFormState extends State<InputForm> {
 
               Padding(
                 padding: const EdgeInsets.only(top:8.0),
-                child: Text("締め切り日：${_data.date.toString().substring(0,10)}"),
+                child: Text(S.of(context).deadline(_data.date.toString().substring(0,10))),
               ),
 
               RaisedButton(
-                child: const Text("締め切り日変更"),
+                child: Text(S.of(context).change_deadline),
                 onPressed: (){
                   print("締め切り日変更をタッチしました");
                   _selectTime(context).then((time){
@@ -321,7 +330,7 @@ void _getUser(BuildContext context) async {
     }
     Navigator.pushReplacementNamed(context, "/list");
   }catch(e){
-    Fluttertoast.showToast(msg: "Firebaseとの接続に失敗しました。");
+    Fluttertoast.showToast(msg: S.of(context).fail_connect_firebase);
   }
 }
 
@@ -333,7 +342,7 @@ void showBasicDialog(BuildContext context) {
       context: context,
       builder: (BuildContext context) =>
           AlertDialog(
-            title: Text("ログイン/登録ダイアログ"),
+            title: Text(S.of(context).login_register),
             content: Form(
               key: _formKey,
               child: Column(
@@ -348,7 +357,7 @@ void showBasicDialog(BuildContext context) {
                     },
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Emailは必須入力項目です';
+                        return S.of(context).validate_mail;
                       }
                     },
                   ),
@@ -363,10 +372,10 @@ void showBasicDialog(BuildContext context) {
                     },
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Passwordは必須入力項目です';
+                        return S.of(context).validate_password_null_empty;
                       }
                       if(value.length<6){
-                        return 'Passwordは6桁以上です';
+                        return S.of(context).validate_password_short_length;
                       }
                     },
                   ),
@@ -376,13 +385,13 @@ void showBasicDialog(BuildContext context) {
             // ボタンの配置
             actions: <Widget>[
               FlatButton(
-                  child: const Text('キャンセル'),
+                  child: Text(S.of(context).cancel),
                   onPressed: () {
                     Navigator.pop(context);
                   }
               ),
               FlatButton(
-                  child: const Text('登録'),
+                  child: Text(S.of(context).register),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -391,7 +400,7 @@ void showBasicDialog(BuildContext context) {
                   }
               ),
               FlatButton(
-                  child: const Text('ログイン'),
+                  child: Text(S.of(context).login),
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -407,17 +416,17 @@ void showBasicDialog(BuildContext context) {
       context: context,
       builder: (BuildContext context) =>
           AlertDialog(
-            title: const Text("確認ダイアログ"),
-            content: Text(firebaseUser.email + " でログインしています。"),
+            title: Text(S.of(context).dialog),
+            content: Text(S.of(context).login_user(firebaseUser.email)),
             actions: <Widget>[
               FlatButton(
-                  child: const Text('キャンセル'),
+                  child: Text(S.of(context).cancel),
                   onPressed: () {
                     Navigator.pop(context);
                   }
               ),
               FlatButton(
-                  child: const Text('ログアウト'),
+                  child: Text(S.of(context).logout),
                   onPressed: () {
                     _auth.signOut();
                     Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false);
@@ -434,7 +443,7 @@ void _signIn(BuildContext context,String email, String password) async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
     Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false);
   }catch(e){
-    Fluttertoast.showToast(msg: "Firebaseのログインに失敗しました。");
+    Fluttertoast.showToast(msg: S.of(context).fail_login_firebase);
   }
 }
 
@@ -443,6 +452,6 @@ void _createUser(BuildContext context,String email, String password) async {
     await _auth.createUserWithEmailAndPassword(email: email, password: password);
     Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false);
   }catch(e){
-    Fluttertoast.showToast(msg: "Firebaseの登録に失敗しました。");
+    Fluttertoast.showToast(msg: S.of(context).fail_register_firebase);
   }
 }

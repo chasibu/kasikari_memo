@@ -21,6 +21,99 @@ class S implements WidgetsLocalizations {
   @override
   TextDirection get textDirection => TextDirection.ltr;
 
+  String get Registration_borrow => "Borrow";
+  String get Registration_lend => "Lend";
+  String get Registration_loan_borrow => "Things I borrow";
+  String get Registration_loan_lend => "Things I lend";
+  String get Registration_name_borrow => "FROM WHOM";
+  String get Registration_name_lend => "TO WHOM";
+  String get borrow => "BORROW";
+  String get cancel => "Cancel";
+  String get change_deadline => "Change Deadline";
+  String get dialog => "User Info";
+  String get edit => "Edit";
+  String get fail_connect_firebase => "Failed to connect to Firebase";
+  String get fail_login_firebase => "Failed to login to Firebase";
+  String get fail_register_firebase => "Failed to register to Firebase";
+  String get input_title => "Registration";
+  String get lend => "LEND";
+  String get login => "Login";
+  String get login_register => "Login/Register";
+  String get logout => "Logout";
+  String get register => "Register";
+  String get title => "Kasikari-memo";
+  String get validate_loan => "Please enter your loan";
+  String get validate_mail => "Please enter your email";
+  String get validate_name => "Please enter your name";
+  String get validate_password_null_empty => "Please enter password";
+  String get validate_password_short_length => "More than 6 characters";
+  String deadline(String time) => "Deadline:$time";
+  String login_user(String mail) => "Login User : $mail";
+  String who(String name) => "Who:$name";
+}
+
+class ja extends S {
+  const ja();
+
+   @override
+  TextDirection get textDirection => TextDirection.ltr;
+
+  @override
+  String get cancel => "キャンセル";
+  @override
+  String get fail_connect_firebase => "Firebaseとの接続に失敗しました。";
+  @override
+  String get Registration_loan_lend => "貸したもの";
+  @override
+  String get title => "かしかりメモ";
+  @override
+  String get login => "ログイン";
+  @override
+  String get fail_login_firebase => "Firebaseへのログインに失敗しました。";
+  @override
+  String get login_register => "ログイン/登録ダイアログ";
+  @override
+  String get validate_loan => "借りたもの、貸したものは必須入力項目です";
+  @override
+  String get change_deadline => "締め切り日変更";
+  @override
+  String get dialog => "ユーザ情報";
+  @override
+  String get input_title => "貸し借り入力";
+  @override
+  String get Registration_lend => "貸した";
+  @override
+  String get lend => "貸";
+  @override
+  String get Registration_name_borrow => "借りた相手";
+  @override
+  String get validate_name => "名前の入力は必須です。";
+  @override
+  String get edit => "編集";
+  @override
+  String get Registration_name_lend => "貸した相手";
+  @override
+  String get validate_password_null_empty => "パスワードは必須入力項目です";
+  @override
+  String get validate_password_short_length => "パスワードは6文字以上です";
+  @override
+  String get Registration_borrow => "借りた";
+  @override
+  String get fail_register_firebase => "Firebaseへの登録に失敗しました。";
+  @override
+  String get Registration_loan_borrow => "借りたもの";
+  @override
+  String get validate_mail => "Emailは必須入力項目です";
+  @override
+  String get borrow => "借";
+  @override
+  String get register => "登録";
+  @override
+  String deadline(String time) => "締切日:$time";
+  @override
+  String login_user(String mail) => "ログイン名 : $mail";
+  @override
+  String who(String name) => "相手:$name";
 }
 
 class en extends S {
@@ -34,6 +127,7 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
   List<Locale> get supportedLocales {
     return const <Locale>[
 
+      const Locale("ja", ""),
       const Locale("en", ""),
 
     ];
@@ -58,6 +152,8 @@ class GeneratedLocalizationsDelegate extends LocalizationsDelegate<WidgetsLocali
     final String lang = getLang(locale);
     switch (lang) {
 
+      case "ja":
+        return new SynchronousFuture<WidgetsLocalizations>(const ja());
       case "en":
         return new SynchronousFuture<WidgetsLocalizations>(const en());
 
