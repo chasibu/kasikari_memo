@@ -314,8 +314,14 @@ class Splash extends StatelessWidget{
   Widget build(BuildContext context) {
     _getUser(context);
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: Center(
-        child: const Text("スプラッシュ画面"),
+        child:
+          FractionallySizedBox(
+            child: Image.asset('res/image/note.png'),
+            heightFactor: 0.4,
+            widthFactor: 0.4,
+          ),
       ),
     );
   }
