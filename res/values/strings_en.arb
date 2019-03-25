@@ -27,5 +27,6 @@
   "validate_loan": "Please enter your loan",
   "validate_mail": "Please enter your email",
   "validate_password_null_empty": "Please enter password",
-  "validate_password_short_length": "More than 6 characters"
+  "validate_password_short_length": "More than 6 characters",
+  "list_null_data":"Let`s tap the add button to take a note of your lending and borrowing!"
 }

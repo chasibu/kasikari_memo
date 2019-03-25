@@ -37,6 +37,7 @@ class S implements WidgetsLocalizations {
   String get fail_register_firebase => "Failed to register to Firebase";
   String get input_title => "Registration";
   String get lend => "LEND";
+  String get list_null_data => "Let`s tap the add button to take a note of your lending and borrowing!";
   String get login => "Login";
   String get login_register => "Login/Register";
   String get logout => "Logout";
@@ -88,6 +89,8 @@ class ja extends S {
   String get Registration_name_borrow => "借りた相手";
   @override
   String get validate_name => "名前の入力は必須です。";
+  @override
+  String get list_null_data => "「＋」から貸し借りをメモしてみましょう！↓";
   @override
   String get edit => "編集";
   @override

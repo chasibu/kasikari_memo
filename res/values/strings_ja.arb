@@ -27,5 +27,6 @@
   "validate_loan":"借りたもの、貸したものは必須入力項目です",
   "validate_mail":"Emailは必須入力項目です",
   "validate_password_null_empty":"パスワードは必須入力項目です",
-  "validate_password_short_length":"パスワードは6文字以上です"
+  "validate_password_short_length":"パスワードは6文字以上です",
+  "list_null_data":"「＋」から貸し借りをメモしてみましょう！↓"
 }

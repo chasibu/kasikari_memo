@@ -57,7 +57,8 @@ class _MyList extends State<List> {
         child: StreamBuilder<QuerySnapshot>(
             stream: Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-              if (!snapshot.hasData) return const Text('Loading...');
+              if (!snapshot.hasData) return const Center(child: Text('Loading...'));
+              if (snapshot.data.documents.length <= 0) return Center(child: Text(S.of(context).list_null_data));
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 padding: const EdgeInsets.only(top: 10.0),
